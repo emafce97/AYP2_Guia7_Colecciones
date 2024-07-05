@@ -1,0 +1,122 @@
+public class Ciudad {
+
+    private String nombre, pais;
+
+    public Ciudad(String nombre, String pais){
+        this.nombre = nombre;
+        this.pais = pais;
+    }
+
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public String getPais() {
+        return this.pais;
+    }
+
+    public String toString(){
+        return "Pais: " + this.pais + " - Nombre de la ciudad: " + this.nombre;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Ciudad ciudad)) return false;
+        return Objects.equals(nombre, ciudad.nombre) && Objects.equals(pais, ciudad.pais);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, pais);
+    }
+}
+
+import java.util.*;
+
+public class Aplicacion {
+
+    private final Map<Integer, List<Ciudad>> poblaciones;
+    private final Map<String, Map<String, Integer>> ciudades;
+
+    public Aplicacion(){
+        this.poblaciones = new HashMap<>();
+        this.ciudades = new HashMap<>();
+    }
+
+    /**
+     * Agrega la poblacion de una ciudad, especificando su pais
+     * @param nombrePais
+     * @param nombreCiudad
+     * @param poblacion
+     */
+    public void agregarPoblacionCiudades(String nombrePais, String nombreCiudad,int poblacion){
+        List<Ciudad> ciudades;
+        if(this.poblaciones.containsKey(poblacion)){
+            ciudades = this.poblaciones.get(poblacion);
+        }else{
+            ciudades = new ArrayList<>();
+        }
+        ciudades.add(new Ciudad(nombreCiudad, nombrePais));
+        this.poblaciones.put(poblacion, ciudades);
+        this.agregarCiudadPoblacion(nombreCiudad, nombrePais, poblacion);
+    }
+
+    private void agregarCiudadPoblacion(String nombreCiudad, String nombrePais, int poblacion) {
+        Map<String, Integer> ciudadPoblacion;
+        if (this.ciudades.containsKey(nombrePais)) {
+            ciudadPoblacion = this.ciudades.get(nombrePais);
+            if (!ciudadPoblacion.containsKey(nombreCiudad)) {
+                ciudadPoblacion.put(nombreCiudad, poblacion);
+            }
+        } else {
+            ciudadPoblacion = new HashMap<>();
+            ciudadPoblacion.put(nombreCiudad, poblacion);
+            this.ciudades.put(nombrePais, ciudadPoblacion);
+        }
+    }
+
+    /**
+     * Busca la poblacion de una determinada ciudad
+     * @param nombreCiudad
+     * @param nombrePais
+     * @return
+     */
+    public int buscarPoblacion(String nombrePais, String nombreCiudad){
+        return this.ciudades.get(nombrePais).get(nombreCiudad);
+    }
+
+    /**
+     * Retona que ciudad/es tiene la cantidad de poblacion especificada por parametro
+     * @param poblacion
+     * @return
+     */
+    public List<Ciudad> getCiudad(int poblacion){
+        return this.poblaciones.get(poblacion);
+    }
+
+    /**
+     * Muestra todas las ciudades que tienen la misma cantidad de habitantes
+     */
+    public void listar(){
+        for(Integer i : this.poblaciones.keySet()){
+            System.out.println("Cant de habitantes: " + i +" -> " + this.poblaciones.get(i));
+        }
+    }
+}
+
+public class Demo {
+
+    public static void main(String[] args){
+        Aplicacion ap = new Aplicacion();
+        ap.agregarPoblacionCiudades("Argentina","Buenos Aires", 1000);
+        ap.agregarPoblacionCiudades("Bolivia","La Paz", 1000);
+        ap.agregarPoblacionCiudades("Uruguay","Montevideo", 1000);
+        ap.agregarPoblacionCiudades("Argentina","Venado Tuerto", 1040);
+        ap.agregarPoblacionCiudades("Chile","Buenos Aires", 1200);
+        ap.agregarPoblacionCiudades("Argentina","Clorinda", 2000);
+        ap.agregarPoblacionCiudades("Paraguay","Asuncion", 1300);
+        ap.listar();
+        System.out.println(ap.buscarPoblacion("Argentina","Venado Tuerto"));
+    }
+}
