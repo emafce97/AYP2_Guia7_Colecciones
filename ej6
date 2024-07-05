@@ -1,0 +1,32 @@
+    /**
+     * Traduce una cadena de texto
+     * @param dic
+     * @param cadena
+     * @return
+     */
+    public static String traducir(Map<String, String> dic, String cadena){
+        String traduccion = "";
+        for(String palabra : cadena.split(" ")) {
+            if (!dic.containsKey(palabra)){
+                traduccion += "<error> ";
+            }else {
+                traduccion += dic.get(palabra) + " ";
+            }
+        }
+        return traduccion;
+    }
+
+    public static void main(String[] args){
+        Map<String, String> dic = new HashMap<>();
+        dic.put("hola", "hello");
+        dic.put("mi", "my");
+        dic.put("nombre", "name");
+        dic.put("es", "is");
+        dic.put("Ema","Ema");
+        dic.put("y", "and");
+        dic.put("soy", "am");
+        dic.put("muy", "so");
+        dic.put("pago", "paid");
+        dic.put("programador", "programmer");
+        System.out.println(traducir(dic,"hola mi nombre es Ema y soy programador estresado muy mal pago"));
+    }
