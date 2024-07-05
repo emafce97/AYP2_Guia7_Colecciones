@@ -1,0 +1,32 @@
+ /**
+     * Genera una lista de cien elementos cuyo valor esta comprendido entre cero y cien
+     * @return
+     */
+    public static List<Integer> generarNumeros(){
+        List<Integer> numeros = new ArrayList<>();
+        Random r = new Random();
+        int c = 0;
+        while( c <= 100){
+            numeros.add(r.nextInt(101));
+            c++;
+        }
+        return numeros;
+    }
+
+    /**
+     * Filtra y ordena los elementos de lista de manera ascendente
+     * @param numeros
+     * @return
+     */
+    public static Set<Integer> filtrar(List<Integer> numeros){
+        return new TreeSet<>(numeros);
+    }
+
+    /**
+     * Muestra por consola los elementos en una coleccion
+     */
+    public static void listar(Set<Integer> numerosFiltrados){
+        for(Integer i : numerosFiltrados){
+            System.out.print(i + " ");
+        }
+    }
