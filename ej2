@@ -1,0 +1,7 @@
+public static Set<Integer> eliminarDuplicados(List<Integer> lista){
+        Set<Integer> e = new HashSet<>();
+        for(Integer i : lista){
+            e.add(i);
+        }
+        return e;
+    }
