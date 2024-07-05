@@ -1,0 +1,72 @@
+public enum Condicion {
+
+    EMBARAZADA(1), ABUELO(1), DISCAPACITADO(1), PERSONA_CON_BEBE(1), OTRO(2);
+
+    private final int prioridad;
+
+    Condicion(int valor){
+        this.prioridad = valor;
+    }
+
+    public int getPrioridad(){
+        return this.prioridad;
+    }
+
+}
+
+public class Persona implements Comparable<Persona> {
+
+    private final Condicion condicion;
+
+    public Persona(Condicion condicion){
+        this.condicion = condicion;
+    }
+
+    public Condicion getCondicion(){
+        return this.condicion;
+    }
+
+    public String toString(){
+        return this.condicion.toString();
+    }
+
+    @Override
+    public int compareTo(Persona o) {
+        return Integer.compare(this.condicion.getPrioridad(), o.getCondicion().getPrioridad());
+    }
+    
+  }
+
+  public class Supermercado {
+
+    private final PriorityQueue<Persona> cola;
+
+    public Supermercado(){
+        this.cola = new PriorityQueue<>();
+    }
+
+    /**
+     * Agrega una persona a la fila
+     * @param p
+     */
+    public void agregar(Persona p){
+        this.cola.add(p);
+    }
+
+    /**
+     * Atiende a una persona de la fila segun su condicion
+     * @return
+     */
+    public Persona quitar(){
+        return this.cola.poll();
+    }
+
+    /**
+     * Devuelve la cantidad de personas en la cola
+     * @return
+     */
+    public int getCantPersonasEnLaFila(){
+        return this.cola.size();
+    }
+
+}
