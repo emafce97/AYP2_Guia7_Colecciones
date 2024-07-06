@@ -1,0 +1,31 @@
+    public static Set<Character> getLetras(String palabra){
+        Set<Character> letras = new HashSet<>();
+        for(Character letra : palabra.toCharArray()){
+            letras.add(letra);
+        }
+        return letras;
+    }
+
+    public static Set<Character> getVocales(String palabra){
+        Set<Character> vocales = new HashSet<>();
+        for(Character letra : palabra.toCharArray()){
+            if(letra == 'a' || letra == 'e' || letra == 'i' || letra == 'o' || letra == 'u'){
+                vocales.add(letra);
+            }
+        }
+        return vocales;
+    }
+
+    public static Set<Character> getConsonantes(String palabra){
+        Set<Character> consonantes = new TreeSet<>();
+        for(Character letra : palabra.toCharArray()){
+            if(!(letra == 'a' || letra == 'e' || letra == 'i' || letra == 'o' || letra == 'u')){
+                consonantes.add(letra);
+            }
+        }
+        return consonantes;
+    }
+    
+    public static void main(String[] args){
+        System.out.println(getConsonantes("abcdefghijklmnopqrstuvwxyz"));
+    }
