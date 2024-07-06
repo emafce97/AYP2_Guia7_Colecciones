@@ -1,0 +1,45 @@
+import java.io.*;
+import java.util.*;
+
+public class Registro {
+
+    private final Map<String, Integer> registroPalabras;
+    private double cantPalabras;
+
+    public Registro(){
+        this.registroPalabras = new HashMap<>();
+    }
+
+    private void getPalabrasCantApariciones() throws IOException {
+        FileReader fr = new FileReader("src/ejercicio7/palabras.txt");
+        BufferedReader br = new BufferedReader(fr);
+        for(String linea : br.lines().toList()){
+            String[] palabras = linea.split(" ");
+            this.cantPalabras += palabras.length;
+               for(String palabra : palabras){
+                   int apariciones = 1;
+                   if(this.registroPalabras.containsKey(palabra)){
+                        apariciones = this.registroPalabras.get(palabra) + 1;
+                       this.registroPalabras.put(palabra, apariciones);
+                   }else{
+                       this.registroPalabras.put(palabra, apariciones);
+                   }
+               }
+        }
+        br.close();
+        fr.close();
+    }
+
+    public void listarPalabrasCantAparicionesFrecuencia() throws IOException {
+        this.getPalabrasCantApariciones();
+        for(String palabra : this.registroPalabras.keySet()){
+            int apariciones = this.registroPalabras.get(palabra);
+            System.out.println("'" + palabra + "'" + " -> Cant. apariciones: " + apariciones + " - Frencuencia: " + (apariciones/this.cantPalabras));
+        }
+    }
+    
+    public static void main(String[] args) throws IOException {
+        Registro reg = new Registro();
+        reg.listarPalabrasCantAparicionesFrecuencia();
+    }
+}
