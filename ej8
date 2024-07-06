@@ -1,0 +1,54 @@
+public class Cadena implements Comparable<Cadena>{
+
+    private int longitud;
+    private String texto;
+
+    public Cadena(String texto){
+        this.texto = texto;
+        this.longitud = this.texto.length();
+    }
+
+    public int getLongitud(){
+        return this.longitud;
+    }
+
+    @Override
+    public int compareTo(Cadena o) {
+        return Integer.compare(this.longitud, o.getLongitud());
+    }
+
+    public String toString(){
+        return String.format("'%s' - Longitud: %d", this.texto, this.longitud);
+    }
+
+}
+
+import java.util.PriorityQueue;
+
+public class Programa {
+
+    private PriorityQueue<Cadena> cola;
+
+    public Programa(){
+        this.cola = new PriorityQueue<>();
+    }
+
+    public void agregar(String... cadenas){
+        for(String cadena : cadenas){
+            this.cola.add(new Cadena(cadena));
+        }
+    }
+
+    public void getCadenas(){
+        while(!this.cola.isEmpty()){
+            System.out.println(this.cola.poll());
+        }
+    }
+
+    public static void main(String[] args){
+        Programa p = new Programa();
+        p.agregar("hola", "ema", "yo", "emanuel", "odontologia", "y");
+        p.getCadenas();
+    }
+}
+
